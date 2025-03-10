@@ -1,0 +1,6 @@
+@LepotaOkol.Api_HostAddress = http://localhost:5012
+
+GET {{LepotaOkol.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
