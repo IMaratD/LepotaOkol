@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  padding: 0;
+  background: url('/assets/beresta.png') no-repeat center center/cover;
+  background-size: 135vw 115vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* Контентная зона */
+.content {
+  width: 60%;
+  max-width: 1000px;
+  padding: 12.5% 5% 25% 5%;
+  background: rgba(255, 255, 255, 0.0);
+  text-align: justify;
+}
+
+
+
+/* Шрифты */
+:root {
+--font-family: "TimesNewRoman", serif;
+}
+
+html, body, app-root, * {
+font-family: var(--font-family);
+}
+
+/* Если нужны другие стили для Ustav, Poluustav и т.д. — оставь */
+// .ustav {
+//   --font-family: 'PonomarUnicode', serif;
+// }
+// .poluustav {
+//   --font-family: 'TriodionUnicode', serif;
+// }
+// .skoropis {
+//   --font-family: 'Voskresensky-Regular', serif;
+// }
+// .modern {
+//   --font-family: 'TimesNewRoman', serif;
+// }
