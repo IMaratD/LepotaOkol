@@ -1,6 +1,6 @@
 <h1 align="center">ЛЕПОТА ОКОЛ</h1>
 <p align="center">
-  <img src="https://github.com/IMaratD/LepotaOkol/frontend/src/assets/DrevoMira.png" width="200" alt="ЛЕПОТА ОКОЛ">
+  <img src="https://github.com/IMaratD/LepotaOkol/blob/3163d7f62beadfa6bac96a0a9f4ea7220fc3158a/frontend/src/assets/DrevoMira.png?raw=true" width="200" alt="ЛЕПОТА ОКОЛ">
 </p>
 
 ---
