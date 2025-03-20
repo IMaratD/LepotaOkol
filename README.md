@@ -1,6 +1,6 @@
 <h1 align="center">ЛЕПОТА ОКОЛ</h1>
 <p align="center">
-  <img src="https://github.com/IMaratD/LepotaOkol/assets/your_logo_here.png" width="200" alt="ЛЕПОТА ОКОЛ">
+  <img src="https://github.com/IMaratD/LepotaOkol/frontend/src/assets/DrevoMira.png" width="200" alt="ЛЕПОТА ОКОЛ">
 </p>
 
 ---
@@ -117,7 +117,7 @@ ng generate component component-name
 
 ---
 
-<p align="center"> С теплом и вдохновением, <br> <b>Марат Диятуллин и проект ЛЕПОТА ОКОЛ 🌿</b> </p> ```
+<p align="center"> С теплом и вдохновением, <br> <b>Марат Идиатуллин и проект ЛЕПОТА ОКОЛ 🌿</b> </p> 
 
 ---
 
