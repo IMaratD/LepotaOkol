@@ -1,7 +1,12 @@
-// ДЛЯ РАЗРЕШЕНИЯ 860-1000*888 ВСЕ ПОДОБРАНО ИДЕАЛЬНО. ТЕПЕРЬ НУЖНО АДАПТИРОВАТЬ ПОД ОСТАЛЬНЫЕ РАЗРЕШЕНИЯ ЭКРАНОВ
+// ДЛЯ РАЗРЕШЕНИЯ 1000*888 ВСЕ ПОДОБРАНО ИДЕАЛЬНО. ТЕПЕРЬ НУЖНО АДАПТИРОВАТЬ ПОД ОСТАЛЬНЫЕ РАЗРЕШЕНИЯ ЭКРАНОВ
 
 
 
+.cracked-text {
+  filter: url(#cracked-ink);
+  color: #3b2f26; 
+  font-family: var(--font-family);
+}
 
 :root {
     --font-family: TimesNewRoman, serif;
@@ -74,7 +79,7 @@
 
 
     &:hover {
-      background: rgba(255, 255, 0, 0.36);
+      background: rgba(255, 255, 255, 0.563);
       color: #fff;
       text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
       box-shadow: 1.5px 1.5px 4px  #000000c1;
@@ -248,7 +253,6 @@
   }
 
   .beresta-container {
-    background: none !important;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -305,10 +309,13 @@
   }
 
   .content-wrapper {
-    position: relative;
+  position: relative;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  color: #3b2f26;
+  filter: url(#cracked-ink);
+  filter: url(#text-distortion);
   margin-left: 200px;
-  margin-right: 218px;
+  margin-right: 230px;
   margin-bottom:18vh;
   margin-top: 15vh;
   flex: 1;
@@ -328,13 +335,13 @@
   
   .right-block {
     position: absolute;
-    bottom: 25vh;
-    right: 33px;
-    height: 64vh;
-    width: 20vw;
+    bottom: 33.5vh;
+    right: 43px;
+    height: 56vh;
+    width: 20.5vw;
     border-radius: 15px;
     z-index: 10;
-    background: rgba(0, 0, 0, 0.197);
+    background: rgba(0, 0, 0, 0.379);
     color: white;
     display: flex;
     align-items:center;
@@ -349,8 +356,8 @@
     padding: 1vh 5vw;
     border-radius: 35px;
     z-index: 11;
-    background: rgba(0, 0, 0, 0.197);
-    color: white;
+    background: white;
+    color: rgb(42, 40, 40);
     display: flex;
     align-items:center;
   }

@@ -45,6 +45,7 @@
             <li><a routerLink="/poems">Стихи</a></li>
             <li><a routerLink="/photos">Фотографии</a></li>
             <li><a routerLink="/etimology">Этимология</a></li>
+            <li><a routerLink="/mythology">Мифология</a></li>
             <li><a routerLink="/about">О проекте</a></li>
           </ul>
         </nav>
@@ -52,9 +53,9 @@
 
       <!-- Основной контент -->
       <main class="content-wrapper">
-        <div class="content-area">
-          <router-outlet></router-outlet>
-        </div>
+          <div class="content-area cracked-text">
+            <router-outlet></router-outlet>
+          </div>
       </main>
 
       <!-- Правый блок -->
@@ -74,3 +75,18 @@
     <p>Contacts</p>
   </footer>
 </div>
+
+<svg width="0" height="0">
+  <filter id="text-distortion" x="0" y="0">
+    <feTurbulence type="turbulence" baseFrequency="2" numOctaves="1" result="turbulence"/>
+    <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="1" />
+  </filter>
+
+  <filter id="cracked-ink">
+    <feTurbulence type="fractalNoise" baseFrequency="6" numOctaves="2" result="turbulence" />
+    <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="1.7" xChannelSelector="R" yChannelSelector="G" />
+    <feComponentTransfer>
+      <feFuncA type="linear" slope="0.9"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
