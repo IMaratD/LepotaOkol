@@ -1,1 +1,178 @@
-<p>photos works!</p>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Галерея с рисовалкой</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Рисовалка */
+    .editor {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    canvas {
+      border: 2px solid white;
+      border-radius: 8px;
+      max-width: 90%;
+      max-height: 70%;
+      background: white;
+    }
+
+    .buttons {
+      margin-top: 15px;
+    }
+
+    .buttons button {
+      margin: 5px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .save {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .close {
+      background: #f44336;
+      color: white;
+    }
+
+    .clear {
+      background: #2196F3;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="gallery">
+    <img src="assets/photo1.webp" alt="Фото 1">
+    <img src="assets/photo2.webp" alt="Фото 2">
+    <img src="assets/photo3.webp" alt="Фото 3">
+  </div>
+
+  <!-- Рисовалка -->
+  <div class="editor" id="editor">
+    <canvas id="canvas"></canvas>
+    <div class="buttons">
+      <button class="clear">Очистить</button>
+      <button class="save">Сохранить</button>
+      <button class="close">Закрыть</button>
+    </div>
+  </div>
+
+  <script>
+    const editor = document.getElementById("editor");
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    let drawing = false;
+
+    // При клике на картинку открываем редактор
+    document.querySelectorAll(".gallery img").forEach(img => {
+      img.addEventListener("click", () => {
+        editor.style.display = "flex";
+        const image = new Image();
+        image.src = img.src;
+        image.onload = () => {
+          canvas.width = image.width;
+          canvas.height = image.height;
+          ctx.drawImage(image, 0, 0);
+        };
+      });
+    });
+
+    // Рисование
+    function startDraw(e) {
+      drawing = true;
+      ctx.beginPath();
+      ctx.moveTo(e.offsetX, e.offsetY);
+    }
+    function draw(e) {
+      if (!drawing) return;
+      ctx.lineWidth = 5;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "red"; // цвет кисти
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+    }
+    function stopDraw() {
+      drawing = false;
+      ctx.closePath();
+    }
+
+    canvas.addEventListener("mousedown", startDraw);
+    canvas.addEventListener("mousemove", draw);
+    canvas.addEventListener("mouseup", stopDraw);
+    canvas.addEventListener("mouseleave", stopDraw);
+
+    // Для сенсорных экранов
+    canvas.addEventListener("touchstart", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      startDraw({ offsetX: touch.clientX - rect.left, offsetY: touch.clientY - rect.top });
+    });
+    canvas.addEventListener("touchmove", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      draw({ offsetX: touch.clientX - rect.left, offsetY: touch.clientY - rect.top });
+    });
+    canvas.addEventListener("touchend", stopDraw);
+
+    // Очистка
+    document.querySelector(".clear").addEventListener("click", () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    // Сохранение на устройство
+    document.querySelector(".save").addEventListener("click", () => {
+      const link = document.createElement("a");
+      link.download = "edited-photo.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+
+    // Закрыть редактор
+    document.querySelector(".close").addEventListener("click", () => {
+      editor.style.display = "none";
+    });
+  </script>
+
+</body>
+</html>
