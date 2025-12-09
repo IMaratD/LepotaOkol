@@ -50,3 +50,10 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# RTF-docs
+*.rtf
+
+# Temporary files
+*.swp
+*.swo

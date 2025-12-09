@@ -7,7 +7,6 @@ import { AboutComponent } from './pages/about/about.component';
 import { EtimologyComponent } from './pages/etimology/etimology.component';
 import { MythologyComponent } from './pages/mythology/mythology.component';
 
-
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'poems', component: PoemsComponent },
@@ -16,5 +15,5 @@ export const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'etimology', component: EtimologyComponent },
   { path: 'mythology', component: MythologyComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];

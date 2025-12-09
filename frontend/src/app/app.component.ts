@@ -1,93 +1,101 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { CommonModule, NgStyle } from '@angular/common';
-import { trigger, transition, style, animate } from '@angular/animations';
-import { RouterModule } from '@angular/router';
-
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from './services/translation.service';
+import { TranslatePipe } from './pipes/translate.pipe';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, NgStyle, RouterModule],
+  imports: [RouterOutlet, CommonModule, TranslatePipe, RouterLink, RouterLinkActive],
+
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   animations: [
     trigger('dropdownAnimation', [
+      state('void', style({ opacity: 0, transform: 'translateY(-10px)' })),
       transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(-10px)' }),
-        animate('300ms ease-in', style({ opacity: 1, transform: 'translateY(0)' }))
+        animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
       ]),
       transition(':leave', [
-        animate('300ms ease-out', style({ opacity: 0, transform: 'translateY(-10px)' }))
-      ])
-    ])
-  ]
+        animate('200ms ease-in', style({ opacity: 0, transform: 'translateY(-10px)' })),
+      ]),
+    ]),
+  ],
 })
 export class AppComponent {
   title = 'Лепота Окол';
   showFontMenu = false;
-  currentLanguage: 'ru' | 'tt' = 'ru';
+
+  isMenuOpen = false;
+  currentLang = 'ru';
+
+  toggleMenuMobile() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  isLangMenuOpen = false;
+  toggleLangMenu() {
+    this.isLangMenuOpen = !this.isLangMenuOpen;
+  }
+  switchLanguage(lang: string) {
+    this.translate.use(lang);
+    this.isLangMenuOpen = false;
+    this.currentLang = lang;
+  }
+
+  constructor(private translate: TranslateService) {
+    this.translate.addLangs(['ru', 'tt', 'en']);
+    this.translate.use('ru');
+  }
+
+  toggleMenu(type: 'ru' | 'tt') {
+    this.showRusFontMenu = type === 'ru' ? !this.showRusFontMenu : false;
+    this.showTatFontMenu = type === 'tt' ? !this.showTatFontMenu : false;
+  }
 
   fontStyles: { ru: { id: string; name: string }[]; tt: { id: string; name: string }[] } = {
     ru: [
       { id: 'ustav', name: 'Устав' },
       { id: 'poluustav', name: 'Полуустав' },
       { id: 'skoropis', name: 'Скоропись' },
-      { id: 'modern', name: 'Современный' }
+      { id: 'modern', name: 'Современный' },
     ],
     tt: [
       { id: 'orkhon', name: 'Орхон' },
       { id: 'arabic', name: 'Арабская' },
       { id: 'latin', name: 'Латиница' },
-      { id: 'modern', name: 'Современный' }
-    ]
+      { id: 'modern', name: 'Современный' },
+    ],
   };
 
   showRusFontMenu = false;
-showTatFontMenu = false;
+  showTatFontMenu = false;
 
-tooltips = [
-  {
-    class: 'sun',
-    img: 'assets/sun.svg',
-    alt: 'Солнце',
-    text: '<b>☀️<i>Россия</b> – это множество действительно великих народов, переплетённых одной общей историей и живущих в единстве, несмотря ни на что!</i><br><br><b>❤️ Разные культуры – одно сердце!</b>'
-  },
-  {
-    class: 'ru',
-    img: 'assets/ru.svg',
-    alt: 'Флаг России',
-    text: '<b>ФЛАГ РОССИИ</b> <br> <br> <b>Белый</b> – символизирует благородство, чистоту и откровенность,<br> <br> <b>Синий</b> – олицетворяет верность, честность, постоянство и целомудрие,<br> <br> <b>Красный</b> – означает мужество, силу, энергию и кровь, пролитую за Родину.'
-  },
-  {
-    class: 'tat',
-    img: 'assets/tat.svg',
-    alt: 'Флаг Татарстана',
-    text: '<b>ФЛАГ ТАТАРСТАНА</b> <br> <br>  <b>Зелёный</b> – символизирует жизнь, природу, весну, возрождение и исламскую традицию,<br> <br> <b>Белый</b> – означает чистоту, благородство, мир и гармонию,<br> <br> <b>Красный</b> – олицетворяет мужество, силу, энергию и историческое наследие.'
-  }
-];
-
-toggleRusFontMenu() {
-  this.showRusFontMenu = !this.showRusFontMenu;
-  this.showTatFontMenu = false; // Закрываем второе меню
-}
-
-toggleTatFontMenu() {
-  this.showTatFontMenu = !this.showTatFontMenu;
-  this.showRusFontMenu = false;
-}
+  tooltips = [
+    {
+      class: 'sun',
+      img: 'assets/icons/sun.svg',
+      alt: 'Солнце',
+      text: '<b>☀️<i>Россия</b> – это множество действительно великих народов, переплетённых одной общей историей и живущих в единстве, несмотря ни на что!</i><br><br><b>❤️ Разные культуры – одно сердце!</b>',
+    },
+    {
+      class: 'ru',
+      img: 'assets/icons/ru.svg',
+      alt: 'Флаг России',
+      text: '<b><i>ФЛАГ РОССИИ</b> <br> <br> <b>Белый</b> – символизирует благородство, чистоту и откровенность,<br> <br> <b>Синий</b> – олицетворяет верность, честность, постоянство и целомудрие,<br> <br> <b>Красный</b> – означает мужество, силу, энергию и кровь, пролитую за Родину.</i>',
+    },
+    {
+      class: 'tat',
+      img: 'assets/icons/tat.svg',
+      alt: 'Флаг Татарстана',
+      text: '<b><i>ФЛАГ ТАТАРСТАНА</b> <br> <br>  <b>Зелёный</b> – символизирует жизнь, природу, весну, возрождение и исламскую традицию,<br> <br> <b>Белый</b> – означает чистоту, благородство, мир и гармонию,<br> <br> <b>Красный</b> – олицетворяет мужество, силу, энергию и историческое наследие.</i>',
+    },
+  ];
 
   availableFontStyles: { id: string; name: string }[] = [];
-
-  constructor() {
-    this.setLanguage(this.currentLanguage);
-  }
-
-  setLanguage(lang: 'ru' | 'tt') {
-    this.currentLanguage = lang;
-    this.availableFontStyles = [...this.fontStyles[lang]];
-    console.log(`Язык изменен на: ${this.currentLanguage}`);
-  }
 
   toggleFontMenu() {
     this.showFontMenu = !this.showFontMenu;
@@ -103,12 +111,15 @@ toggleTatFontMenu() {
       modern: 'TimesNewRoman, serif',
       orkhon: 'OrkhonInk, serif',
       arabic: 'Amiri, serif',
-      latin: 'Montserrat, sans-serif'
+      latin: 'Montserrat, sans-serif',
     };
 
     if (fontMap[style]) {
       document.documentElement.style.setProperty('--font-family', fontMap[style]);
-      console.log(`Текущий стиль:`, getComputedStyle(document.documentElement).getPropertyValue('--font-family'));
+      console.log(
+        `Текущий стиль:`,
+        getComputedStyle(document.documentElement).getPropertyValue('--font-family')
+      );
     } else {
       console.warn(`Стиль ${style} не найден!`);
     }

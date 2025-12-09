@@ -23,10 +23,23 @@ builder.Services.AddSwaggerGen(options =>
 // Добавление контроллера
 builder.Services.AddControllers();
 
+var allowedAngularOrigin = "http://localhost:4200";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularDev", policy =>
+    {
+        policy.WithOrigins(allowedAngularOrigin)
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 app.UseStaticFiles();  // Позволяет серверу раздавать статические файлы, например, изображения
 
+app.UseCors("AllowAngularDev");
 
 app.MapControllers();
 
@@ -81,26 +94,3 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
-
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Подключение статики
-app.UseStaticFiles();  
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
-
-// Swagger — для тестирования API
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.Run();

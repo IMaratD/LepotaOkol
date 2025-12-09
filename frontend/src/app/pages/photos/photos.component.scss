@@ -1,0 +1,228 @@
+.gallery-wrapper {
+  padding: 20px;
+}
+
+.gallery {
+  max-width: 50vw;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.photo-card img {
+  max-width: 100px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.photo-card img:hover {
+  transform: scale(1.03);
+}
+
+.preview-wrapper {
+  max-width: 85vw;
+  position: relative;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.preview-box {
+  z-index: 2;
+  background: #fff;
+  padding: 15px;
+  border-radius: 12px;
+  max-width: 170vw;
+}
+
+.preview-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  max-width: 85vw;
+  margin-top: 15px;
+}
+
+.preview-buttons button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: #f0f0f0;
+  transition: 0.2s;
+}
+
+.preview-buttons button:hover:not([disabled]) {
+  background: #ddd;
+}
+
+.preview-buttons button[disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.editor-wrapper {
+  max-width: 85vw;
+  padding: 15px;
+}
+
+.editor-header {
+  max-width: 85vw;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.editor-overlay {
+  pointer-events: auto;
+}
+
+.editor-overlay.hidden {
+  pointer-events: none !important;
+}
+
+.editor-canvas-area {
+  position: relative;
+  display: inline-block;
+  max-width: 55vw;
+  max-height: 65vh;
+}
+
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: crosshair;
+}
+
+.canvas-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 95vw;
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+.preview-img {
+  max-width: 85vw;
+  max-height: 70vh;
+  display: block;
+  margin: auto;
+  border-radius: 10px;
+}
+
+.example {
+  max-width: 100px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+// .gallery {
+//   display: grid;
+//   gap: 16px;
+//   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+// }
+
+// .gallery-container {
+//   max-width: 100%;
+//   height: auto;
+//   object-fit: cover;
+//   border-radius: 10px;
+//   cursor: pointer;
+//   transition: transform 0.2s ease-in-out;
+// }
+
+// .example {
+//   max-width: 150px;
+//   max-height: 150px;
+// }
+
+// .gallery-photo {
+//   max-width: 150px;
+//   max-height: 150px;
+//   // padding: 5px;
+//   margin: 5px;
+
+//   // transform: scale(1.5);
+// }
+
+// .gallery img:active {
+//   transform: scale(1.5);
+//   transition: transform 0.2s ease-in-out;
+// }
+
+// body {
+//   font-family: Arial, sans-serif;
+//   margin: 0;
+//   padding: 0;
+//   background: #f4f4f45e;
+// }
+
+// /* Рисовалка */
+// .editor {
+//   display: none;
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.85);
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: column;
+//   z-index: 1000;
+// }
+
+// canvas {
+//   border: 2px solid white;
+//   border-radius: 8px;
+//   max-width: 90%;
+//   max-height: 70%;
+//   background: white;
+// }
+
+// .buttons {
+//   margin-top: 15px;
+// }
+
+// .buttons button {
+//   margin: 5px;
+//   padding: 10px 20px;
+//   border: none;
+//   border-radius: 6px;
+//   cursor: pointer;
+//   font-size: 16px;
+// }
+
+// .save {
+//   background: #4caf50;
+//   color: white;
+// }
+
+// .close {
+//   background: #f44336;
+//   color: white;
+// }
+
+// .clear {
+//   background: #2196f3;
+//   color: white;
+// }

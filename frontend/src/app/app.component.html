@@ -1,23 +1,28 @@
-<div class="beresta-container" [ngStyle]="{'font-family': 'var(--font-family)'}">
+<div class="beresta-container" [ngStyle]="{ 'font-family': 'var(--font-family)' }">
   <div class="beresta-wrapper">
     <!-- Шапка -->
     <header class="header-button header">
       <div class="logo">
-        <img class="icon DrevoMira" src="assets/DrevoMira.svg" alt="Древо_Мира">
+        <img class="icon DrevoMira" src="assets/icons/DrevoMira.svg" alt="Древо_Мира" />
       </div>
 
       <div class="tooltip-container">
         <div class="tooltip" *ngFor="let item of tooltips">
-          <img [src]="item.img" [alt]="item.alt" [class]="item.class">
+          <img [src]="item.img" [alt]="item.alt" [class]="item.class" />
           <span class="tooltip-text" [innerHTML]="item.text"></span>
         </div>
       </div>
       <div class="language-switcher">
-        <button class="lang-btn-rus" (click)="setLanguage('ru')">Рус</button>
-        <button class="lang-btn-tat" (click)="setLanguage('tt')">Тат</button>
+        <button class="lang-btn" (click)="toggleLangMenu()">{{ currentLang | uppercase }}</button>
+
+        <div *ngIf="isLangMenuOpen" [@dropdownAnimation]>
+          <button class="lang-btn-rus" (click)="switchLanguage('ru')">Рус</button>
+          <button class="lang-btn-tat" (click)="switchLanguage('tt')">Тат</button>
+        </div>
       </div>
+
       <div class="font-menu-wrapper">
-        <button (click)="toggleRusFontMenu()">Русская письменность</button>
+        <button (click)="toggleMenu('ru')">Русская письменность</button>
         <div *ngIf="showRusFontMenu" [@dropdownAnimation] class="font-menu">
           <button (click)="changeFontStyle('ustav')">Устав</button>
           <button (click)="changeFontStyle('poluustav')">Полуустав</button>
@@ -25,7 +30,7 @@
           <button (click)="changeFontStyle('modern')">Современный</button>
         </div>
 
-        <button (click)="toggleTatFontMenu()">Татарская письменность</button>
+        <button (click)="toggleMenu('tt')">Татарская письменность</button>
         <div *ngIf="showTatFontMenu" [@dropdownAnimation] class="font-menu">
           <button (click)="changeFontStyle('orkhon')">Орхон</button>
           <button (click)="changeFontStyle('arabic')">Арабская</button>
@@ -34,6 +39,22 @@
         </div>
       </div>
     </header>
+
+    <div class="mobile">
+      <button class="menu-toggle" (click)="toggleMenuMobile()">Меню</button>
+
+      <nav class="mobile-menu" *ngIf="isMenuOpen" [@dropdownAnimation]>
+        <ul>
+          <li><a routerLink="/home">Главная</a></li>
+          <li><a routerLink="/poems">Стихи</a></li>
+          <li><a routerLink="/photos">За пределами строк</a></li>
+          <li><a routerLink="/oglyanis-vokrug">Оглянись Вокруг</a></li>
+          <li><a routerLink="/etimology">Этимология</a></li>
+          <li><a routerLink="/mythology">Мифология</a></li>
+          <li><a routerLink="/about">О проекте</a></li>
+        </ul>
+      </nav>
+    </div>
 
     <!-- Основная разметка -->
     <div class="main-layout">
@@ -51,39 +72,47 @@
           </ul>
         </nav>
       </aside>
-
-      <!-- Основной контент -->
-      <main class="content-wrapper">
-          <div class="content-area cracked-text">
-            <router-outlet></router-outlet>
-          </div>
-      </main>
-
-      <!-- Правый блок -->
-      <aside class="right-block">
-        <p>Info</p>
-      </aside>
     </div>
+
+    <!-- Основной контент -->
+    <main class="content-wrapper">
+      <div class="content-area cracked-text">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+
+    <!-- Правый блок -->
+    <aside class="right-block">
+      <p>Info</p>
+    </aside>
   </div>
-  
+  <!-- </div> -->
+
   <!-- Футер -->
   <footer class="footer">
     <p class="project">© 2025 Lepota Okol</p>
     <p>Contacts</p>
   </footer>
+  <!-- </div> -->
+
+  <svg width="0" height="0">
+    <filter id="text-distortion" x="0" y="0">
+      <feTurbulence type="turbulence" baseFrequency="2" numOctaves="1" result="turbulence" />
+      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="1" />
+    </filter>
+
+    <filter id="cracked-ink">
+      <feTurbulence type="fractalNoise" baseFrequency="6" numOctaves="2" result="turbulence" />
+      <feDisplacementMap
+        in2="turbulence"
+        in="SourceGraphic"
+        scale="1.7"
+        xChannelSelector="R"
+        yChannelSelector="G"
+      />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.9" />
+      </feComponentTransfer>
+    </filter>
+  </svg>
 </div>
-
-<svg width="0" height="0">
-  <filter id="text-distortion" x="0" y="0">
-    <feTurbulence type="turbulence" baseFrequency="2" numOctaves="1" result="turbulence"/>
-    <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="1" />
-  </filter>
-
-  <filter id="cracked-ink">
-    <feTurbulence type="fractalNoise" baseFrequency="6" numOctaves="2" result="turbulence" />
-    <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="1.7" xChannelSelector="R" yChannelSelector="G" />
-    <feComponentTransfer>
-      <feFuncA type="linear" slope="0.9"/>
-    </feComponentTransfer>
-  </filter>
-</svg>

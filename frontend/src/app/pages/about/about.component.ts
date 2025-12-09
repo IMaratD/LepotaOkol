@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   standalone: true,
   selector: 'app-about',
   imports: [CommonModule],
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+  styleUrls: ['./about.component.scss'],
 })
-
 export class AboutComponent {
   showFontMenu = false;
 
@@ -17,12 +15,12 @@ export class AboutComponent {
 
   toggleFontMenu() {
     this.showFontMenu = !this.showFontMenu;
-  } 
+  }
   fonts = [
     { name: 'Устав', class: 'ponomar-unicode' },
     { name: 'Полуустав', class: 'triodion-unicode' },
     { name: 'Скоропись', class: 'voskresensky-regular' },
-    { name: 'Современный шрифт', class: 'times-new-roman' }
+    { name: 'Современный шрифт', class: 'times-new-roman' },
   ];
 
   setFont(fontClass: string): void {

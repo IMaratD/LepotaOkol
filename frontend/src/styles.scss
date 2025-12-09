@@ -14,19 +14,20 @@ body {
   width: 60%;
   max-width: 1000px;
   padding: 12.5% 5% 25% 5%;
-  background: rgba(255, 255, 255, 0.0);
+  background: rgba(255, 255, 255, 0);
   text-align: justify;
 }
 
-
-
 /* Шрифты */
 :root {
---font-family: "TimesNewRoman", serif;
+  --font-family: 'TimesNewRoman', serif;
 }
 
-html, body, app-root, * {
-font-family: var(--font-family);
+html,
+body,
+app-root,
+* {
+  font-family: var(--font-family);
 }
 
 /* 📱 Смартфоны (портрет) */

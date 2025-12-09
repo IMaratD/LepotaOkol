@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-mythology',
   imports: [],
   templateUrl: './mythology.component.html',
-  styleUrl: './mythology.component.scss'
+  styleUrl: './mythology.component.scss',
 })
-export class MythologyComponent {
-
-}
+export class MythologyComponent {}

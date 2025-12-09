@@ -1,178 +1,130 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Галерея с рисовалкой</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f4f4;
-    }
+<h1>"За пределами строк"</h1>
+<p>
+  Путешествия сквозь объектив. Именно путешествия... К себе... К своему серцу. Ведь,
+  <b>каждый снимок — история. Каждый кадр — момент жизни.</b> <br />Здесь вы можете не только
+  лицезреть красоту вокруг, но и тренировать свою фантазию и улучшать навыки рисования, используя
+  нашу "рисовалку".<br />
+  В мире, где реальность и фантазия порой переплетаются так красиво, что перестаёшь замечать границу
+  между ними. <br />
+  Кстати, моя фантазия и мои глаза не перестают меня удивлять: <br />
+  Не поверите, однако, летом, в один из прохладных дней, я реально встретил дракона над Казнью
+  <img class="example" src="http://localhost:5012/uploads/_Dragon_init.webp" /> (<img
+    class="example"
+    src="http://localhost:5012/uploads/_Dragon_.webp"
+  />). <br />
+  Ну а как же иначе — когда смотришь на мир сердцем, они порой прилетают.😏<br />
+  А вот тот же дракон, только с рюкзаком и в шапке
+  <img class="example" src="http://localhost:5012/uploads/_Dragon_with_backpack_init.webp" /> (<img
+    class="example"
+    src="http://localhost:5012/uploads/_Dragon_with_backpack.webp"
+  />) Видимо, начал подмерзать, раз надел шапку...🤔<br /><br />
+  К слову сказать, прилетают не только драконы. Вот, к примеру, повстречавшийся мне однажды, Пегас
+  (<img class="example" src="http://localhost:5012/uploads/_Pegas_init.webp" /> ) <br /><br />
+  А если присмотреться, то и тут, и там, в самых обычных вещах, можно заметить самые невероятные
+  вещи — хоть даже портал в другое измерение: <br />
+  И подобных фотографий, дающих простор фантазии вы найдёте здесь немало.<br /><br />
+  <b>Все просто:</b> <br />- Находите понравившееся фото, <br />- Открываете рисовалку, <br />-
+  Выбираете инструменты, цвета и <br />- И рисуете, что подскажет вам сердце. <br />
+  К сожалению, на текущий момент возможность сохранять ваши изображения на сайте отсутствует, обещаю
+  это исправить в одном из будущих обновлений. Тем не менее, вы можете сохранить их себе в одном из
+  3 форматов и более того можно сразу же дать Вашей картине любое подходящее на Ваш взгляд название.
+  Рисуйте, сохраняйте их себе, делитесь с друзьями вашими картинами, не забывая отмечать нас😉
+</p>
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-      padding: 20px;
-    }
-
-    .gallery img {
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    .gallery img:hover {
-      transform: scale(1.05);
-    }
-
-    /* Рисовалка */
-    .editor {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 1000;
-    }
-
-    canvas {
-      border: 2px solid white;
-      border-radius: 8px;
-      max-width: 90%;
-      max-height: 70%;
-      background: white;
-    }
-
-    .buttons {
-      margin-top: 15px;
-    }
-
-    .buttons button {
-      margin: 5px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .save {
-      background: #4CAF50;
-      color: white;
-    }
-
-    .close {
-      background: #f44336;
-      color: white;
-    }
-
-    .clear {
-      background: #2196F3;
-      color: white;
-    }
-  </style>
-</head>
-<body>
+<!-- ===========================
+      ГАЛЕРЕЯ ФОТО
+=========================== -->
+<div *ngIf="!previewPhoto && !selectedPhoto" class="gallery-wrapper">
+  <h2 class="title">Галерея фотографий</h2>
 
   <div class="gallery">
-    <img src="assets/photo1.webp" alt="Фото 1">
-    <img src="assets/photo2.webp" alt="Фото 2">
-    <img src="assets/photo3.webp" alt="Фото 3">
+    <div class="photo-card" *ngFor="let p of photos">
+      <img [src]="p" (click)="openPreview(p)" />
+    </div>
   </div>
+</div>
 
-  <!-- Рисовалка -->
-  <div class="editor" id="editor">
-    <canvas id="canvas"></canvas>
-    <div class="buttons">
-      <button class="clear">Очистить</button>
-      <button class="save">Сохранить</button>
-      <button class="close">Закрыть</button>
+<!-- ===========================
+      ПРОСМОТР ФОТО (LIGHTBOX)
+=========================== -->
+<div *ngIf="previewPhoto && !selectedPhoto" class="preview-wrapper">
+  <div class="preview-overlay" (click)="closePreview()"></div>
+
+  <div class="preview-box">
+    <img class="preview-img" [src]="previewPhoto" />
+
+    <div class="preview-buttons">
+      <button (click)="prevPhoto()" [disabled]="currentIndex <= 0">⬅ Предыдущее</button>
+
+      <button (click)="openEditor(previewPhoto)">Открыть в рисовалке</button>
+
+      <button (click)="nextPhoto()" [disabled]="currentIndex >= photos.length - 1">
+        Следующее ➡
+      </button>
+
+      <button class="close" (click)="closePreview()">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+        РИСОВАЛКА
+=========================== -->
+<div *ngIf="selectedPhoto" class="editor-wrapper">
+  <div class="editor-header">
+    <button class="back-btn" (click)="closeEditor()">← Назад к галерее</button>
+
+    <div class="tools">
+      <!-- Инструменты -->
+      <label>Инструмент:</label>
+      <select [(ngModel)]="currentTool">
+        <option value="pen">Ручка</option>
+        <option value="marker">Маркер</option>
+        <option value="brush">Кисть</option>
+        <option value="shadow">Тень</option>
+        <option value="spray">Спрей</option>
+      </select>
+
+      <!-- Цвет -->
+      <label>Цвет:</label>
+      <input type="color" [(ngModel)]="currentColor" />
+
+      <!-- Размер -->
+      <label>Размер: {{ currentSize }}</label>
+      <input type="range" min="1" max="50" [(ngModel)]="currentSize" />
+
+      <!-- Прозрачность -->
+      <label>Прозрачность: {{ currentOpacity }}</label>
+      <input type="range" min="0.1" max="1" step="0.05" [(ngModel)]="currentOpacity" />
+    </div>
+
+    <div class="history-buttons">
+      <button (click)="undo()">Отменить</button>
+      <button (click)="redo()">Вернуть</button>
+      <button (click)="clearAll()">Очистить</button>
+    </div>
+
+    <div class="save-buttons">
+      <button (click)="saveAs('png')">PNG</button>
+      <button (click)="saveAs('jpg')">JPG</button>
+      <button (click)="saveAs('webp')">WEBP</button>
     </div>
   </div>
 
-  <script>
-    const editor = document.getElementById("editor");
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    let drawing = false;
+  <!-- ===========================
+            CANVAS
+  =========================== -->
+  <div class="editor-canvas-area">
+    <!-- Исходное фото (невидимое) -->
+    <img #hiddenImage [src]="selectedPhoto" style="display: none" />
 
-    // При клике на картинку открываем редактор
-    document.querySelectorAll(".gallery img").forEach(img => {
-      img.addEventListener("click", () => {
-        editor.style.display = "flex";
-        const image = new Image();
-        image.src = img.src;
-        image.onload = () => {
-          canvas.width = image.width;
-          canvas.height = image.height;
-          ctx.drawImage(image, 0, 0);
-        };
-      });
-    });
+    <!-- CANVAS для фона -->
+    <canvas #backgroundCanvas class="layer"></canvas>
 
-    // Рисование
-    function startDraw(e) {
-      drawing = true;
-      ctx.beginPath();
-      ctx.moveTo(e.offsetX, e.offsetY);
-    }
-    function draw(e) {
-      if (!drawing) return;
-      ctx.lineWidth = 5;
-      ctx.lineCap = "round";
-      ctx.strokeStyle = "red"; // цвет кисти
-      ctx.lineTo(e.offsetX, e.offsetY);
-      ctx.stroke();
-    }
-    function stopDraw() {
-      drawing = false;
-      ctx.closePath();
-    }
+    <!-- CANVAS для рисунка -->
+    <canvas #drawingCanvas class="layer"></canvas>
 
-    canvas.addEventListener("mousedown", startDraw);
-    canvas.addEventListener("mousemove", draw);
-    canvas.addEventListener("mouseup", stopDraw);
-    canvas.addEventListener("mouseleave", stopDraw);
-
-    // Для сенсорных экранов
-    canvas.addEventListener("touchstart", (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const touch = e.touches[0];
-      startDraw({ offsetX: touch.clientX - rect.left, offsetY: touch.clientY - rect.top });
-    });
-    canvas.addEventListener("touchmove", (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const touch = e.touches[0];
-      draw({ offsetX: touch.clientX - rect.left, offsetY: touch.clientY - rect.top });
-    });
-    canvas.addEventListener("touchend", stopDraw);
-
-    // Очистка
-    document.querySelector(".clear").addEventListener("click", () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-
-    // Сохранение на устройство
-    document.querySelector(".save").addEventListener("click", () => {
-      const link = document.createElement("a");
-      link.download = "edited-photo.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    });
-
-    // Закрыть редактор
-    document.querySelector(".close").addEventListener("click", () => {
-      editor.style.display = "none";
-    });
-  </script>
-
-</body>
-</html>
+    <!-- CANVAS для предпросмотра кисти -->
+    <canvas #previewCanvas class="layer"></canvas>
+  </div>
+</div>

@@ -84,5 +84,35 @@ namespace LepotaOkol.Api.Controllers
 
             return Ok(new { FilePath = $"/uploads/{outputFileName}" });
         }
+        
+        // [HttpGet("list")]
+        // public IActionResult GetFiles()
+        // {
+        // string uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", _uploadPath);
+
+        // var files = Directory.GetFiles(uploadsPath)
+        // .Select(Path.GetFileName)
+        // .Select(f => $"/uploads/{f}")
+        // .ToList();
+
+        // return Ok(files);
+        // }  
+    
+    [HttpGet("list")]
+public IActionResult GetFiles()
+{
+    string uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
+    if (!Directory.Exists(uploadsPath))
+        return Ok(new List<string>());
+
+    var files = Directory
+        .GetFiles(uploadsPath)
+        .Select(Path.GetFileName)
+        .Select(f => $"/uploads/{f}")
+        .ToList();
+
+    return Ok(files);
+}
     }
 }

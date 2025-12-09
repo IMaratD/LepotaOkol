@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-poems',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, TranslateModule],
   templateUrl: './poems.component.html',
-  styleUrl: './poems.component.scss'
+  styleUrls: ['./poems.component.scss'],
 })
-export class PoemsComponent {
-
-}
+export class PoemsComponent {}

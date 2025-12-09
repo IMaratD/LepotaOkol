@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-etimology',
   imports: [],
   templateUrl: './etimology.component.html',
-  styleUrl: './etimology.component.scss'
+  styleUrl: './etimology.component.scss',
 })
-export class EtimologyComponent {
-
-}
+export class EtimologyComponent {}
