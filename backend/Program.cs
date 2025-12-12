@@ -4,11 +4,29 @@ using LepotaOkol.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Добавление контекста базы данных для PostgreSQL
+// =========================
+// 1. ЕДИНАЯ CORS-ПОЛИТИКА
+// =========================
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
+// =========================
+// База данных
+// =========================
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Добавление OpenAPI (Swagger)
+// =========================
+// Swagger
+// =========================
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -20,30 +38,31 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Добавление контроллера
+// Контроллеры
 builder.Services.AddControllers();
-
-var allowedAngularOrigin = "http://localhost:4200";
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAngularDev", policy =>
-    {
-        policy.WithOrigins(allowedAngularOrigin)
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
-});
 
 var app = builder.Build();
 
-app.UseStaticFiles();  // Позволяет серверу раздавать статические файлы, например, изображения
+// =========================
+// 2. CORS ДЛЯ СТАТИКИ (картинок)
+// =========================
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+    }
+});
 
-app.UseCors("AllowAngularDev");
+// =========================
+// 3. ВКЛЮЧАЕМ ЕДИНУЮ ПОЛИТИКУ CORS
+// =========================
+app.UseCors("AllowAll");
 
+// Контроллеры
 app.MapControllers();
 
-// Настройка пайплайна HTTP-запросов
+// Swagger (dev only)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -55,24 +74,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast(
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
 app.Run();
 
-// Контекст базы данных
+// =========================
+// Контекст БД
+// =========================
 public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -82,15 +88,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<MyEntity> MyEntities { get; set; }
 }
 
-// Модель для хранения данных в базе
+// Модель
 public class MyEntity
 {
     public int Id { get; set; }
     public string Name { get; set; }
-}
-
-// Прогноз погоды
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }

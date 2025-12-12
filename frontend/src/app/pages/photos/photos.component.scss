@@ -94,15 +94,14 @@
 .editor-canvas-area {
   position: relative;
   display: inline-block;
-  max-width: 55vw;
-  max-height: 65vh;
 }
 
 .layer {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   cursor: crosshair;
+  pointer-events: auto;
 }
 
 .canvas-wrapper {
@@ -118,9 +117,11 @@ canvas {
   position: absolute;
   top: 0;
   left: 0;
-  max-width: 95vw;
-  max-height: 85vh;
-  object-fit: contain;
+  image-rendering: auto;
+  pointer-events: auto;
+  touch-action: none;
+  width: 85vw;
+  height: 70vh;
 }
 
 .preview-img {
@@ -137,92 +138,22 @@ canvas {
   cursor: pointer;
   transition: 0.2s;
 }
+.drawing-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
-// .gallery {
-//   display: grid;
-//   gap: 16px;
-//   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-// }
+.drawing-canvas {
+  width: 100%;
+  height: 500px;
+  border: 1px solid #ccc;
+  display: block;
+}
 
-// .gallery-container {
-//   max-width: 100%;
-//   height: auto;
-//   object-fit: cover;
-//   border-radius: 10px;
-//   cursor: pointer;
-//   transition: transform 0.2s ease-in-out;
-// }
-
-// .example {
-//   max-width: 150px;
-//   max-height: 150px;
-// }
-
-// .gallery-photo {
-//   max-width: 150px;
-//   max-height: 150px;
-//   // padding: 5px;
-//   margin: 5px;
-
-//   // transform: scale(1.5);
-// }
-
-// .gallery img:active {
-//   transform: scale(1.5);
-//   transition: transform 0.2s ease-in-out;
-// }
-
-// body {
-//   font-family: Arial, sans-serif;
-//   margin: 0;
-//   padding: 0;
-//   background: #f4f4f45e;
-// }
-
-// /* Рисовалка */
-// .editor {
-//   display: none;
-//   position: fixed;
-//   inset: 0;
-//   background: rgba(0, 0, 0, 0.85);
-//   justify-content: center;
-//   align-items: center;
-//   flex-direction: column;
-//   z-index: 1000;
-// }
-
-// canvas {
-//   border: 2px solid white;
-//   border-radius: 8px;
-//   max-width: 90%;
-//   max-height: 70%;
-//   background: white;
-// }
-
-// .buttons {
-//   margin-top: 15px;
-// }
-
-// .buttons button {
-//   margin: 5px;
-//   padding: 10px 20px;
-//   border: none;
-//   border-radius: 6px;
-//   cursor: pointer;
-//   font-size: 16px;
-// }
-
-// .save {
-//   background: #4caf50;
-//   color: white;
-// }
-
-// .close {
-//   background: #f44336;
-//   color: white;
-// }
-
-// .clear {
-//   background: #2196f3;
-//   color: white;
-// }
+.tools {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
