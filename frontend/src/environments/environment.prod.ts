@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-production-api.com/api'
+  apiUrl: 'https://api.lepotaokol.ru/api',
+  assetsUrl: 'https://lepotaokol.ru/assets/uploads',
 };

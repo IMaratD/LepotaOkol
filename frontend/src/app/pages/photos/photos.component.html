@@ -1,6 +1,6 @@
 <h1>"За пределами строк"</h1>
 <p>
-  Путешествия сквозь объектив. Именно путешествия... К себе... К своему серцу.
+  Путешествия сквозь объектив. <br />Именно путешествия... <br />К себе... <br />К своему сердцу.<br />
   <b>Ведь, каждый снимок — история. Каждый кадр — момент жизни.</b> <br />Здесь вы можете не только
   лицезреть красоту вокруг, но и тренировать свою фантазию и улучшать навыки рисования, используя
   нашу "рисовалку".<br />
@@ -8,24 +8,24 @@
   между ними. <br />
   Кстати, моя фантазия и мои глаза не перестают меня удивлять: <br />
   Не поверите, однако, летом, в один из прохладных дней, я реально встретил дракона над Казнью
-  <img class="example" src="http://localhost:5012/uploads/_Dragon_init.webp" /> (<img
+  <img class="example" src="https://lepotaokol.ru/assets/uploads/_Dragon_init.webp" /> (<img
     class="example"
-    src="http://localhost:5012/uploads/_Dragon_.webp"
+    src="https://lepotaokol.ru/assets/uploads/_Dragon_.webp"
   />). <br />
   Ну а как же иначе — когда смотришь на мир сердцем, они порой прилетают.😏<br />
   А вот тот же дракон, только с рюкзаком и в шапке
-  <img class="example" src="http://localhost:5012/uploads/_Dragon_with_backpack_init.webp" /> (<img
-    class="example"
-    src="http://localhost:5012/uploads/_Dragon_with_backpack.webp"
-  />) Видимо, начал подмерзать, раз надел шапку...🤔<br /><br />
+  <img class="example" src="https://lepotaokol.ru/assets/uploads/_Dragon_with_backpack_init.webp" />
+  (<img class="example" src="https://lepotaokol.ru/assets/uploads/_Dragon_with_backpack.webp" />)
+  Видимо, начал подмерзать, раз надел шапку...🤔<br /><br />
   К слову сказать, прилетают не только драконы. Вот, к примеру, повстречавшийся мне однажды, Пегас
-  (<img class="example" src="http://localhost:5012/uploads/_Pegas_init.webp" /> ) <br /><br />
+  (<img class="example" src="https://lepotaokol.ru/assets/uploads/_Pegas_init.webp" /> )
+  <br /><br />
   А если присмотреться, то и тут, и там, в самых обычных вещах, можно заметить самые невероятные
   вещи — хоть даже портал в другое измерение:<img
     class="example"
-    src="http://localhost:5012/uploads/_Portal_.webp"
+    src="https://lepotaokol.ru/assets/uploads/_Portal_init.webp"
   />
-  (<img class="example" src="http://localhost:5012/uploads/_Portal_.webp" />)<br />
+  (<img class="example" src="https://lepotaokol.ru/assets/uploads/_Portal_.webp" />)<br />
   И подобных фотографий, дающих простор фантазии вы найдёте здесь немало.<br /><br />
   <b>Все просто:</b> <br />- Находите понравившееся фото, <br />- Открываете рисовалку, <br />-
   Выбираете инструменты, цвета и... <br />- И рисуете, что подскажет вам сердце. <br />
@@ -35,10 +35,10 @@
   Рисуйте, сохраняйте их себе, делитесь с друзьями вашими картинами, не забывая отмечать нас😉
 </p>
 
-<div *ngIf="!previewPhoto && !selectedPhoto" class="gallery-wrapper">
+<div class="gallery-wrapper" [hidden]="previewPhoto || selectedPhoto">
   <h2 class="title">Галерея фотографий</h2>
   <div class="gallery">
-    <div class="photo-card" *ngFor="let p of photos">
+    <div class="photo-card" *ngFor="let p of photos" loading="lazy">
       <img [src]="p" (click)="openPreview(p)" />
     </div>
   </div>
@@ -103,24 +103,29 @@
     class="editor-canvas-area"
     style="position: relative; display: flex; justify-content: center; align-items: center"
   >
-    <img #hiddenImage [src]="selectedPhoto" crossorigin="anonymous" style="display: none" />
+    <img #hiddenImage [src]="selectedPhoto" style="display: none" (load)="onHiddenImageLoad()" />
+
+    <div *ngIf="isLoading" class="loader">Загрузка изображения…</div>
 
     <div
+      *ngIf="selectedPhoto"
       class="canvas-box"
-      style="
-        position: relative;
-        width: 100%;
-        max-width: 90vw;
-        max-height: 90vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      "
+      [style.width.px]="displayW"
+      [style.height.px]="displayH"
     >
       <!-- canvases: bg(1) / drawing(2) / preview(3) -->
       <canvas #backgroundCanvas class="layer"></canvas>
-      <canvas #drawingCanvas class="layer"></canvas>
-      <canvas #previewCanvas class="layer"></canvas>
+      <canvas
+        #drawingCanvas
+        class="layer"
+        (pointerdown)="onPointerDown($event)"
+        (pointermove)="onPointerMove($event)"
+        (pointerup)="onPointerUp($event)"
+        (pointerleave)="onPointerUp($event)"
+        (pointercancel)="onPointerUp($event)"
+      >
+      </canvas>
+      <canvas #previewCanvas class="layer preview-layer"></canvas>
     </div>
   </div>
 </div>

@@ -1,37 +1,37 @@
-<!doctype html>
-  <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>LepotaOkol</title>
-    <base href="/">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
   </head>
-  <script>
-    (function() {
-      const infoBox = document.createElement("div");
-      infoBox.style.position = "fixed";
-      infoBox.style.bottom = "10px";
-      infoBox.style.right = "10px";
-      infoBox.style.background = "rgba(0,0,0,0.7)";
-      infoBox.style.color = "#0f0";
-      infoBox.style.padding = "6px 10px";
-      infoBox.style.fontSize = "14px";
-      infoBox.style.fontFamily = "monospace";
-      infoBox.style.zIndex = "9999";
-      infoBox.style.borderRadius = "8px";
-      document.body.appendChild(infoBox);
-    
-      function updateInfo() {
-        infoBox.textContent =
-          `CSS: ${window.innerWidth}x${window.innerHeight} | DPR: ${window.devicePixelRatio}`;
-      }
-    
-      window.addEventListener("resize", updateInfo);
-      updateInfo();
-    })();
-    </script>    
   <body>
     <app-root></app-root>
+
+    <script>
+      (function () {
+        const infoBox = document.createElement('div');
+        infoBox.style.position = 'fixed';
+        infoBox.style.bottom = '10px';
+        infoBox.style.right = '10px';
+        infoBox.style.background = 'rgba(0,0,0,0.7)';
+        infoBox.style.color = '#0f0';
+        infoBox.style.padding = '6px 10px';
+        infoBox.style.fontSize = '14px';
+        infoBox.style.fontFamily = 'monospace';
+        infoBox.style.zIndex = '9999';
+        infoBox.style.borderRadius = '8px';
+        document.body.appendChild(infoBox);
+
+        function updateInfo() {
+          infoBox.textContent = `CSS: ${window.innerWidth}x${window.innerHeight} | DPR: ${window.devicePixelRatio}`;
+        }
+
+        window.addEventListener('resize', updateInfo);
+        updateInfo();
+      })();
+    </script>
   </body>
-  </html>
+</html>

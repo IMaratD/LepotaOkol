@@ -4,6 +4,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from './services/translation.service';
 import { TranslatePipe } from './pipes/translate.pipe';
+import { environment } from '../environments/environment';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -32,7 +33,7 @@ export class AppComponent {
   isMenuOpen = false;
   currentLang = 'ru';
 
-  toggleMenuMobile() {
+  toggleLeftMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
@@ -54,6 +55,19 @@ export class AppComponent {
   toggleMenu(type: 'ru' | 'tt') {
     this.showRusFontMenu = type === 'ru' ? !this.showRusFontMenu : false;
     this.showTatFontMenu = type === 'tt' ? !this.showTatFontMenu : false;
+  }
+
+  isFontMenuOpen = false;
+  activeScript: 'ru' | 'tt' = 'ru';
+  currentFont: string | null = null;
+
+  toggleFontMenu() {
+    this.isFontMenuOpen = !this.isFontMenuOpen;
+  }
+
+  selectScript(script: 'ru' | 'tt') {
+    this.activeScript = script;
+    this.currentFont = null;
   }
 
   fontStyles: { ru: { id: string; name: string }[]; tt: { id: string; name: string }[] } = {
@@ -97,12 +111,10 @@ export class AppComponent {
 
   availableFontStyles: { id: string; name: string }[] = [];
 
-  toggleFontMenu() {
-    this.showFontMenu = !this.showFontMenu;
-  }
-
   changeFontStyle(style: string) {
     console.log(`Смена шрифта на: ${style}`);
+
+    this.currentFont = style;
 
     const fontMap: Record<string, string> = {
       ustav: 'PonomarUnicode, serif',
@@ -123,7 +135,5 @@ export class AppComponent {
     } else {
       console.warn(`Стиль ${style} не найден!`);
     }
-
-    this.showFontMenu = false;
   }
 }
